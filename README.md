@@ -33,13 +33,10 @@
 ## Запуск программы
 Для запуска программы выполните команду:
 
-```bash
 python main.py
-````
 
 ## Пример вывода
 
-```text
 === Direct calls ===
 Employee 50000.0
 Developer(Middle) 85000.0
