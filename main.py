@@ -40,7 +40,7 @@ class Developer(Employee):
 
     def write_code(self) -> str:
         """Метод, которого нет в базовом классе."""
-        return f"{self.name} writes code 🧠💻"
+        return f"{self.name} writes code"
 
 
 def print_staff(staff: list[Employee]) -> None:
