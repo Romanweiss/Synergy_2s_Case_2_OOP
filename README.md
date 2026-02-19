@@ -1,8 +1,8 @@
 # Кейс-задача №2 — Демонстрация работы базового и производного классов (Python OOP)
 
 ## Описание
-Программа демонстрирует работу методов базового и производного классов в Python.
-В решении показаны ключевые принципы ООП:
+Программа демонстрирует работу методов базового и производного классов.
+Реализованы и наглядно показаны:
 - наследование;
 - переопределение методов;
 - полиморфизм.
@@ -10,49 +10,50 @@
 ## Условие задачи
 Написать тестовую программу, которая демонстрирует работу методов базового и производного классов.
 
-## Реализованная модель
-- `Employee` — базовый класс сотрудника.
-- `Developer` — производный класс, наследующийся от `Employee`.
+## Что сделано для наглядности проверки
+- Вывод разделён на 3 логических блока:
+  1. Методы базового класса.
+  2. Методы производного класса.
+  3. Полиморфизм через общий интерфейс.
+- Добавлено разнообразие данных: используется несколько объектов `Developer` с разными уровнями и бонусами.
+- Для каждого вызова явно показано, какой метод вызван и какой результат получен.
 
-### Базовый класс `Employee`
-- `get_role()` — возвращает роль базового класса.
-- `calc_salary()` — возвращает базовую зарплату.
-- `info()` — формирует строку с данными сотрудника.
+## Реализованные классы
+- `Employee` — базовый класс.
+- `Developer(Employee)` — производный класс.
 
-### Производный класс `Developer`
-- Наследует поля и поведение `Employee`.
-- Переопределяет:
-  - `get_role()`;
-  - `calc_salary()`.
-- Добавляет собственный метод `write_code()`.
-
-## Демонстрация работы программы
-В `main()` выполнены два этапа:
-1. Прямые вызовы методов базового и производного классов.
-2. Полиморфный вызов через общий интерфейс (`print_staff`).
-
-## Структура проекта
-- `main.py` — исходный код программы.
-- `README.md` — описание проекта и инструкция запуска.
-- `task_solution_description.txt` — подробное описание процесса решения и структуры программы для отчёта.
-
-## Используемые технологии
-- Python 3.x
-- Объектно-ориентированное программирование (классы, наследование, полиморфизм)
-
-## Запуск программы
+## Запуск
 ```bash
 python main.py
 ```
 
 ## Пример вывода
 ```text
-=== Direct calls ===
-Employee 50000.0
-Developer(Middle) 85000.0
-Roman writes code
+========================================================================
+DEMO: BASE AND DERIVED CLASS METHODS
+========================================================================
 
-=== Polymorphism (same interface, different behavior) ===
-Ivan | role=Employee | salary=50000.00
-Roman | role=Developer(Middle) | salary=85000.00
+[1] Base class object (Employee)
+Object data: name=Ivan, base_salary=50000.00
+get_role() -> Employee
+calc_salary() -> 50000.00
+info() -> Ivan | role=Employee | salary=50000.00
+
+[2] Derived class objects (Developer)
+Developer #1: name=Roman, level=Middle
+  get_role() -> Developer(Middle)
+  calc_salary() -> 85000.00 (base=70000.00 + bonus=15000.00)
+  write_code() -> Roman writes code
+  info() -> Roman | role=Developer(Middle) | salary=85000.00
+Developer #2: name=Anna, level=Junior
+  get_role() -> Developer(Junior)
+  calc_salary() -> 60000.00 (base=55000.00 + bonus=5000.00)
+  write_code() -> Anna writes code
+  info() -> Anna | role=Developer(Junior) | salary=60000.00
+
+[3] Polymorphism demo
+Calling one interface info() for mixed list[Employee]:
+1. [Employee] Ivan | role=Employee | salary=50000.00
+2. [Developer] Roman | role=Developer(Middle) | salary=85000.00
+3. [Developer] Anna | role=Developer(Junior) | salary=60000.00
 ```

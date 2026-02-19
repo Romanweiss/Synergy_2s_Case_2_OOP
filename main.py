@@ -17,7 +17,7 @@ class Employee:
         return self.base_salary
 
     def info(self) -> str:
-        """Общий метод, который использует другие методы (полиморфизм)."""
+        """Общий метод с полиморфным поведением через get_role/calc_salary."""
         return f"{self.name} | role={self.get_role()} | salary={self.calc_salary():.2f}"
 
 
@@ -29,13 +29,12 @@ class Developer(Employee):
         self.level = level
         self.bonus = float(bonus)
 
-    # Переопределение (override) метода базового класса
     def get_role(self) -> str:
+        """Переопределение метода базового класса."""
         return f"Developer({self.level})"
 
-    # Переопределение (override) метода базового класса
     def calc_salary(self) -> float:
-        # разработчик получает базу + бонус
+        """Переопределение метода базового класса: база + бонус."""
         return self.base_salary + self.bonus
 
     def write_code(self) -> str:
@@ -44,24 +43,47 @@ class Developer(Employee):
 
 
 def print_staff(staff: list[Employee]) -> None:
-    """Функция показывает полиморфизм: работает с базовым типом Employee."""
-    for person in staff:
-        print(person.info())
+    """Показывает полиморфизм: единый вызов info() для разных классов."""
+    for index, person in enumerate(staff, start=1):
+        print(f"{index}. [{person.__class__.__name__}] {person.info()}")
+
+
+def print_header(title: str) -> None:
+    separator = "=" * 72
+    print(separator)
+    print(title)
+    print(separator)
 
 
 def main() -> None:
-    e = Employee("Ivan", 50000)
-    d = Developer("Roman", 70000, level="Middle", bonus=15000)
+    employee = Employee("Ivan", 50_000)
+    developers = [
+        Developer("Roman", 70_000, level="Middle", bonus=15_000),
+        Developer("Anna", 55_000, level="Junior", bonus=5_000),
+    ]
 
-    # Демонстрация методов базового и производного классов
-    print("=== Direct calls ===")
-    print(e.get_role(), e.calc_salary())
-    print(d.get_role(), d.calc_salary())
-    print(d.write_code())
+    print_header("DEMO: BASE AND DERIVED CLASS METHODS")
 
-    # Демонстрация полиморфизма
-    print("\n=== Polymorphism (same interface, different behavior) ===")
-    staff: list[Employee] = [e, d]
+    print("\n[1] Base class object (Employee)")
+    print(f"Object data: name={employee.name}, base_salary={employee.base_salary:.2f}")
+    print(f"get_role() -> {employee.get_role()}")
+    print(f"calc_salary() -> {employee.calc_salary():.2f}")
+    print(f"info() -> {employee.info()}")
+
+    print("\n[2] Derived class objects (Developer)")
+    for index, developer in enumerate(developers, start=1):
+        print(f"Developer #{index}: name={developer.name}, level={developer.level}")
+        print(f"  get_role() -> {developer.get_role()}")
+        print(
+            f"  calc_salary() -> {developer.calc_salary():.2f} "
+            f"(base={developer.base_salary:.2f} + bonus={developer.bonus:.2f})"
+        )
+        print(f"  write_code() -> {developer.write_code()}")
+        print(f"  info() -> {developer.info()}")
+
+    print("\n[3] Polymorphism demo")
+    print("Calling one interface info() for mixed list[Employee]:")
+    staff: list[Employee] = [employee, *developers]
     print_staff(staff)
 
 
